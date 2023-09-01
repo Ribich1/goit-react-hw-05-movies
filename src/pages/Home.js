@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getMovies } from './service/movies-service';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { Loader } from 'components/Loader/Loader';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -25,23 +26,26 @@ const Home = () => {
   //   useEffect(() => {
   // HTTP request
   // }, []);
+  const location = useLocation();
+  console.log('movies_from home', movies)
+
   return (
     <>
       {error && <div>{error}</div>}
+      {isLoading && <Loader />}
       <div>Home page</div>
 
       <ul>
         {movies.map(movie => {
           return (
             <li key={movie.id}>
-              <Link to={`/movies/:${movie.id}`}>
+              <Link to={`/movies/${movie.id}`} state={{ from: location }}>
                 {movie.title || movie.name}
               </Link>
             </li>
           );
         })}
       </ul>
-      {isLoading && <div>Loading....</div>}
     </>
   );
 };
