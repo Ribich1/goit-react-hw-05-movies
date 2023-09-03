@@ -1,6 +1,7 @@
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { getMoviesById } from '../pages/service/movies-service';
 import { useEffect, useState } from 'react';
+import { Loader } from 'components/Loader/Loader';
 
 const MovieDetails = () => {
   const [movies, setMovies] = useState([]);
@@ -25,13 +26,18 @@ const MovieDetails = () => {
     };
     fetchMovies(movieId);
   }, [movieId]);
+  
   console.log('movies123', movies);
   const { original_title, overview, genres, poster_path } = movies;
   const link = `https://image.tmdb.org/t/p/w500${poster_path}`;
+
   return (
     <>
+      {error && <div>{error}</div>}
+      {isLoading && <Loader />}
+
       <div>
-        <img src={link} alt="Film" />
+        {poster_path ? <img src={link} alt="Film" /> : <div>no poster</div>}
       </div>
       <h1>{original_title}</h1>
       <h2>Overview</h2>
