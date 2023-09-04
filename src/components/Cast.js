@@ -24,9 +24,7 @@ const Cast = () => {
     };
     fetchMoviesCast(movieId);
   }, [movieId]);
-  console.log('cast', cast.cast);
   const arrayCast = cast.cast;
-  console.log('🚀 ~ file: Cast.js:29 ~ Cast ~ arrayCast:', arrayCast);
 
   return (
     <>

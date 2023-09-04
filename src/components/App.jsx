@@ -4,7 +4,7 @@ import Movies from 'pages/Movies';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from './Layaout';
 import Cast from './Cast';
-import { Reviews } from './Reviews';
+import  Reviews from './Reviews';
 
 export const App = () => {
   return (
