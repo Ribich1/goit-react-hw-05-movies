@@ -93,3 +93,32 @@ export const getMoviesReviewsById = movie_id =>
     .catch(function (error) {
       console.error(error);
     });
+
+const optionsQuery = nameFilm => {
+  return {
+    method: 'GET',
+    url: 'https://api.themoviedb.org/3/search/movie',
+    params: {
+      query: `${nameFilm}`,
+      include_adult: 'false',
+      language: 'en-US',
+      page: '1',
+    },
+    headers: {
+      accept: 'application/json',
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNzIwODc0MjAyYzIwOGQ5ZWQ3OGQ1MjFmMjY2Y2U2NyIsInN1YiI6IjY0ZTkxN2ZlMDZmOTg0MDBhZTQ5MGI5ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.btoi06h0ihOod2yP9dAWcgLoOwdiNZUBYXKL2PUWqSY',
+    },
+  };
+};
+
+export const getMoviesByNameFilm = nameFilm =>
+  axios
+    .request(optionsQuery(nameFilm))
+    .then(function (response) {
+      console.log('response.dataAxios', response.data);
+      return response.data;
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
