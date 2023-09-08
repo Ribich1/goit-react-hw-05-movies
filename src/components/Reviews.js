@@ -14,7 +14,9 @@ const Reviews = () => {
       setIsLoading(true);
       try {
         const response = await getMoviesReviewsById(movieId);
-        setReviews(response);
+        if (response.results.length>0) {
+          setReviews(response.results);
+        }
         console.log('response', response);
       } catch (error) {
         console.log('error', error);
@@ -25,14 +27,12 @@ const Reviews = () => {
     };
     fetchMoviesReviews(movieId);
   }, [movieId]);
-  console.log('reviews', reviews.results);
-  const arrayReviews = reviews.results;
 
   return (
     <>
       <ul>
-        {arrayReviews &&
-          arrayReviews.map(rev => {
+        {(!reviews.length && <p>We don't have any reviews for this movie.</p>) ||
+          reviews.map(rev => {
             return (
               <li key={rev.id}>
                 <h2>Author: {rev.author}</h2>

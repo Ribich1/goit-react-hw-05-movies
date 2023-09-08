@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { getMoviesByNameFilm } from 'pages/service/movies-service';
 import { useEffect, useState } from 'react';
 
@@ -8,11 +8,11 @@ const Movies = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [films, setFilms] = useState([]);
-  const [movieIdValue, setMovieIdValue] = useState('')
+  const [movieIdValue, setMovieIdValue] = useState('');
 
-const handleChangeMovieId=event=>{
-  setMovieIdValue(event.currentTarget.value.toLowerCase())
-}
+  const handleChangeMovieId = event => {
+    setMovieIdValue(event.currentTarget.value.toLowerCase());
+  };
 
   const updateQueryString = evt => {
     evt.preventDefault();
@@ -48,7 +48,7 @@ const handleChangeMovieId=event=>{
   console.log('films123', films);
   console.log('query', query);
   const arrayFilms = films.results;
-
+  const location = useLocation();
   return (
     <>
       <form onSubmit={updateQueryString}>
@@ -67,7 +67,9 @@ const handleChangeMovieId=event=>{
         {arrayFilms?.map(film => {
           return (
             <li key={film.id}>
-              <Link to={`/movies/${film.id}`}>{film.original_title}</Link>
+              <Link to={`/movies/${film.id}`} state={{ from: location }}>
+                {film.original_title}
+              </Link>
             </li>
           );
         })}
