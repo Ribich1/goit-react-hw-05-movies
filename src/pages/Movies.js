@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const movieId = searchParams.get('movieId') ?? '';
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const movieId = searchParams.get('movieId') ?? '';
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState(null);
   const [films, setFilms] = useState([]);
   const [movieIdValue, setMovieIdValue] = useState('');
 
