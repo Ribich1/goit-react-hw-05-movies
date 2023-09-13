@@ -29,7 +29,8 @@ const MovieDetails = () => {
   }, [movieId]);
 
   console.log('movies123', movies);
-  const { original_title, overview, genres, poster_path } = movies;
+  const { original_title, overview, genres, poster_path, vote_average } =
+    movies;
   const link = `https://image.tmdb.org/t/p/w500${poster_path}`;
   const location = useLocation();
   const backLinkLocationRef = useRef(location.state?.from ?? '/');
@@ -44,6 +45,7 @@ const MovieDetails = () => {
         {poster_path ? <img src={link} alt="Film" /> : <div>no poster</div>}
       </div>
       <h1>{original_title}</h1>
+      <p>User Score: {vote_average ? Math.round(vote_average * 10) : 0} %</p>
       <h2>Overview</h2>
       <p>{overview}</p>
       <h3>Genres</h3>
