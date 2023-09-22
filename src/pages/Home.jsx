@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { getMovies } from './service/movies-service';
-import { Link } from 'react-router-dom';
 import { Loader } from 'components/Loader/Loader';
+import { MovieList } from 'components/movieLIst/movieList';
+import { LayoutStyled } from 'components/Layaout/Layaout.styled';
+import { Error } from '../components/Error/Error.styled';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -14,7 +16,6 @@ const Home = () => {
         const response = await getMovies();
         setMovies(response);
       } catch (error) {
-        console.log('error', error);
         setError(error.message);
       } finally {
         setIsLoading(false);
@@ -23,29 +24,12 @@ const Home = () => {
     fetchMovies();
   }, []);
 
-  //   useEffect(() => {
-  // HTTP request
-  // }, []);
-  console.log('movies_from home', movies);
-
   return (
-    <>
-      {error && <div>{error}</div>}
+    <LayoutStyled>
+      {error && !isLoading && <Error>{error}</Error>}
       {isLoading && <Loader />}
-      <div>Home page</div>
-
-      <ul>
-        {movies.map(movie => {
-          return (
-            <li key={movie.id}>
-              <Link to={`/movies/${movie.id}`}>
-                {movie.title || movie.name}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </>
+      <MovieList movies={movies} />
+    </LayoutStyled>
   );
 };
 export default Home;

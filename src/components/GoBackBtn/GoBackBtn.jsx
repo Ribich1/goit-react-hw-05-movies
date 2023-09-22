@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
+import { BtnLink } from './GoBackBtn.styled';
 
 export const GoBackBtn = ({ path}) => {
-  return <Link to={path}>Go back</Link>;
+  return <BtnLink to={path}>Go back</BtnLink>;
 };

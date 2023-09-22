@@ -1,16 +1,15 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import {HeaderWrap} from './Layaout.styled';
+import { HeaderWrap, LayoutStyled } from './Layaout.styled';
 
 export const Layout = () => {
   return (
     <div>
-      <HeaderWrap>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/movies">    Movies</NavLink>
-        {/* <NavLink>movieId</NavLink>
-    <NavLink>cast</NavLink>
-    <NavLink>reviews</NavLink> */}
-      </HeaderWrap>
+      <LayoutStyled>
+        <HeaderWrap>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/movies"> Movies</NavLink>
+        </HeaderWrap>
+      </LayoutStyled>
       <main>
         <Outlet />
       </main>

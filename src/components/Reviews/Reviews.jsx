@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom';
 import { getMoviesReviewsById } from 'pages/service/movies-service';
 import { useEffect, useState } from 'react';
 import { Loader } from 'components/Loader/Loader';
+import { Error } from '../Error/Error.styled';
+import { ListReviews, ReviewWrap, ReviewsText, ReviewsTitle } from './Reviews.styled';
 
 const Reviews = () => {
   const { movieId } = useParams();
@@ -14,12 +16,10 @@ const Reviews = () => {
       setIsLoading(true);
       try {
         const response = await getMoviesReviewsById(movieId);
-        if (response.results.length>0) {
+        if (response.results.length > 0) {
           setReviews(response.results);
         }
-        console.log('response', response);
       } catch (error) {
-        console.log('error', error);
         setError(error.message);
       } finally {
         setIsLoading(false);
@@ -29,19 +29,26 @@ const Reviews = () => {
   }, [movieId]);
 
   return (
-    <>
-      <ul>
-        {(!reviews.length && <p>We don't have any reviews for this movie.</p>) ||
+    <ReviewWrap>
+      {error && !isLoading && <Error>{error}</Error>}
+      {isLoading && <Loader />}
+
+      <ListReviews>
+        {(!reviews.length && (
+          <Error>
+            <p>We don't have any reviews for this movie.</p>
+          </Error>
+        )) ||
           reviews.map(rev => {
             return (
               <li key={rev.id}>
-                <h2>Author: {rev.author}</h2>
-                <p>{rev.content}</p>
+                <ReviewsTitle>Author: {rev.author}</ReviewsTitle>
+                <ReviewsText>{rev.content}</ReviewsText>
               </li>
             );
           })}
-      </ul>
-    </>
+      </ListReviews>
+    </ReviewWrap>
   );
 };
 

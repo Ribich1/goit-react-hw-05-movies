@@ -15,7 +15,6 @@ export const getMovies = () =>
   axios
     .request(options)
     .then(function (response) {
-      console.log(response.data.results);
       return response.data.results;
     })
     .catch(function (error) {
@@ -39,7 +38,6 @@ export const getMoviesById = movie_id =>
   axios
     .request(optionsFilmId(movie_id))
     .then(function (response) {
-      console.log(response.data);
       return response.data;
     })
     .catch(function (error) {
@@ -63,7 +61,6 @@ export const getMoviesCastById = movie_id =>
   axios
     .request(optionsCast(movie_id))
     .then(function (response) {
-      console.log('response.data axios', response.data);
       return response.data;
     })
     .catch(function (error) {
@@ -87,7 +84,6 @@ export const getMoviesReviewsById = movie_id =>
   axios
     .request(optionsReviews(movie_id))
     .then(function (response) {
-      console.log('response from axios Reviews', response.data);
       return response.data;
     })
     .catch(function (error) {
@@ -116,7 +112,6 @@ export const getMoviesByNameFilm = nameFilm =>
   axios
     .request(optionsQuery(nameFilm))
     .then(function (response) {
-      console.log('response.dataAxios', response.data);
       return response.data;
     })
     .catch(function (error) {

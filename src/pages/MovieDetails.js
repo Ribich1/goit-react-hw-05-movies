@@ -3,6 +3,8 @@ import { getMoviesById } from '../pages/service/movies-service';
 import { useEffect, useRef, useState } from 'react';
 import { Loader } from 'components/Loader/Loader';
 import { GoBackBtn } from 'components/GoBackBtn/GoBackBtn';
+import { LayoutStyled } from 'components/Layaout/Layaout.styled';
+import { MovieComponent } from 'components/movieComponent/movieComponent';
 
 const MovieDetails = () => {
   const [movies, setMovies] = useState([]);
@@ -10,16 +12,13 @@ const MovieDetails = () => {
   const [error, setError] = useState(null);
 
   const { movieId } = useParams();
-  console.log('movieId', movieId);
   useEffect(() => {
     const fetchMovies = async movieId => {
       setIsLoading(true);
       try {
         const response = await getMoviesById(movieId);
         setMovies(response);
-        console.log('response', response);
       } catch (error) {
-        console.log('error', error);
         setError(error.message);
       } finally {
         setIsLoading(false);
@@ -28,43 +27,23 @@ const MovieDetails = () => {
     fetchMovies(movieId);
   }, [movieId]);
 
-  console.log('movies123', movies);
-  const { original_title, overview, genres, poster_path, vote_average } =
-    movies;
-  const link = `https://image.tmdb.org/t/p/w500${poster_path}`;
+
   const location = useLocation();
   const backLinkLocationRef = useRef(location.state?.from ?? '/');
-  console.log('location detail', location);
 
   return (
     <>
-      {error && <div>{error}</div>}
-      {isLoading && <Loader />}
-      <GoBackBtn path={backLinkLocationRef.current} />
-      <div>
-        {poster_path ? <img src={link} alt="Film" /> : <div>no poster</div>}
-      </div>
-      <h1>{original_title}</h1>
-      <p>User Score: {vote_average ? Math.round(vote_average * 10) : 0} %</p>
-      <h2>Overview</h2>
-      <p>{overview}</p>
-      <h3>Genres</h3>
-      <ul>
-        {genres &&
-          genres.map(genre => {
-            return <li key={genre.id}>{genre.name}</li>;
-          })}
-      </ul>
-
-      <ul>
-        <li>
-          <Link to="cast">Cast</Link>
-        </li>
-        <li>
-          <Link to="reviews">Reviews</Link>
-        </li>
-      </ul>
-      <Outlet />
+      <LayoutStyled>
+        {error && <div>{error}</div>}
+        {isLoading && <Loader />}
+        {!isLoading && (
+          <>
+            <GoBackBtn path={backLinkLocationRef.current} />
+            <MovieComponent movies={movies} />
+            <Outlet />
+          </>
+        )}
+      </LayoutStyled>
     </>
   );
 };
